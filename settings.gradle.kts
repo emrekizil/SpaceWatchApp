@@ -21,3 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "SpaceWatchApp"
 include(":app")
+include(":core:data")
+include(":feature:list")
+include(":feature:detail")
