@@ -14,9 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -29,16 +26,16 @@ fun ListScreen(
     viewModel: ListViewModel = hiltViewModel()
 ) {
     val listUiState by viewModel.listUiState.collectAsStateWithLifecycle()
-    ListScreenContent(modifier, listUiState, viewModel::getSatellites)
+    ListScreenContent(modifier, listUiState, viewModel.query, viewModel::updateQuery)
 }
 
 @Composable
 fun ListScreenContent(
     modifier: Modifier = Modifier,
     listUiState: ListUiState,
-    getSatellites: (String) -> Unit
+    query: String,
+    updateQuery: (String) -> Unit
 ) {
-    var text by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -48,10 +45,9 @@ fun ListScreenContent(
     ) {
         TextField(
             modifier = Modifier.fillMaxWidth(),
-            value = text,
+            value = query,
             onValueChange = { value ->
-                text = value
-                getSatellites(value)
+                updateQuery(value)
             },
             singleLine = true,
             placeholder = {
@@ -77,7 +73,7 @@ fun ListScreenContent(
             }
 
             is ListUiState.Success -> {
-                if (listUiState.satellites.isEmpty()){
+                if (listUiState.satellites.isEmpty()) {
                     Text("nothin to show", color = Color.Black)
                 } else {
                     LazyColumn {
