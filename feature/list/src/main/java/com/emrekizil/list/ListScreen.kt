@@ -23,10 +23,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun ListScreen(
     modifier: Modifier = Modifier,
-    viewModel: ListViewModel = hiltViewModel()
+    viewModel: ListViewModel = hiltViewModel(),
+    navigateToDetailScreen:(Int,String)->Unit
 ) {
     val listUiState by viewModel.listUiState.collectAsStateWithLifecycle()
-    ListScreenContent(modifier, listUiState, viewModel.query, viewModel::updateQuery)
+    ListScreenContent(modifier, listUiState, viewModel.query, viewModel::updateQuery,navigateToDetailScreen)
 }
 
 @Composable
@@ -34,7 +35,8 @@ fun ListScreenContent(
     modifier: Modifier = Modifier,
     listUiState: ListUiState,
     query: String,
-    updateQuery: (String) -> Unit
+    updateQuery: (String) -> Unit,
+    navigateToDetailScreen:(Int,String)->Unit
 ) {
     Column(
         modifier = Modifier
@@ -82,7 +84,8 @@ fun ListScreenContent(
                             key = { it.id }
                         ) {
                             SatelliteListItem(
-                                satellite = it
+                                satellite = it,
+                                navigateToDetailScreen = navigateToDetailScreen
                             )
                         }
                     }

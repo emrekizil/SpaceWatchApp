@@ -12,8 +12,10 @@ data object ListRoute
 fun NavController.navigateToListScreen() =
     navigate(route = ListRoute)
 
-fun NavGraphBuilder.listScreen(){
+fun NavGraphBuilder.listScreen(
+    navigateToDetailScreen: (Int,String) -> Unit
+) {
     composable<ListRoute> {
-        ListScreen()
+        ListScreen(navigateToDetailScreen = navigateToDetailScreen)
     }
 }

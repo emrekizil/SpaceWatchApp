@@ -1,6 +1,7 @@
 package com.emrekizil.list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,12 +22,15 @@ import com.emrekizil.core.model.Satellite
 @Composable
 fun SatelliteListItem(
     modifier: Modifier = Modifier,
-    satellite: Satellite
+    satellite: Satellite,
+    navigateToDetailScreen:(Int,String)->Unit
 ) {
     val activityText = if (satellite.active) "Active" else "Passive"
     val activityColor = if (satellite.active) Color.Green else Color.Red
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().clickable {
+            navigateToDetailScreen(satellite.id,satellite.name)
+        },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {

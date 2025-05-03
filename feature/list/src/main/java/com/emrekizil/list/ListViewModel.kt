@@ -41,7 +41,7 @@ class ListViewModel @Inject constructor(
     var query by mutableStateOf("")
         private set
 
-    fun getSatellites(
+    private fun getSatellites(
         searchQuery: String = ""
     ) {
         viewModelScope.launch {
@@ -88,7 +88,7 @@ class ListViewModel @Inject constructor(
     }
 
     companion object{
-        const val TIMEOUT = 1000L
+        const val TIMEOUT = 600L
         const val MINIMUM_LENGTH = 1
     }
 }

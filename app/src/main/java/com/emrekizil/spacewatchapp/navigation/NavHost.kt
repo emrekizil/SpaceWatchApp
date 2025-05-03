@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.emrekizil.detail.navigation.detailScreen
+import com.emrekizil.detail.navigation.navigateToDetailScreen
 import com.emrekizil.list.navigation.ListRoute
 import com.emrekizil.list.navigation.listScreen
 
@@ -19,7 +20,9 @@ fun NavHost(
         startDestination = ListRoute,
         modifier = modifier
     ){
-        listScreen()
+        listScreen(
+            navController::navigateToDetailScreen
+        )
         detailScreen()
     }
 }
