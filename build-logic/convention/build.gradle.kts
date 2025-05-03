@@ -55,5 +55,9 @@ gradlePlugin {
             id = "spacewatchapp.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+        register("androidRoom") {
+            id = "spacewatchapp.android.room"
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
     }
 }
