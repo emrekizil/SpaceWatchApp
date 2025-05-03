@@ -10,5 +10,5 @@ import kotlinx.coroutines.flow.Flow
 interface SpaceWatchRepository {
     fun getSatellites(searchQuery:String): Flow<DataSource<List<Satellite>>>
     fun getSatelliteDetail(satelliteId:Int):Flow<DataSource<SatelliteDetail>>
-    fun getSatellitePosition(satelliteId:Int):Flow<DataSource<SatellitePosition>>
+    fun getSatellitePosition(satelliteId:Int):Flow<DataSource<List<SatellitePosition>>>
 }

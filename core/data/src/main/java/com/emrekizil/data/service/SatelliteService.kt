@@ -37,13 +37,11 @@ class SatelliteService @Inject constructor(
 
     suspend fun getSatellitePosition(
         satelliteId: Int
-    ): Position {
+    ): List<Position> {
         val data = getDataFromJsonFile<SatellitePositionResponse>(POSITIONS_ASSET).list.first {
             it.id == satelliteId.toString()
         }
-        return data
-            .positions
-            .random()
+        return data.positions
     }
 
 

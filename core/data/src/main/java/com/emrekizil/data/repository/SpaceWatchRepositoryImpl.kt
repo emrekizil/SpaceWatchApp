@@ -56,15 +56,15 @@ class SpaceWatchRepositoryImpl @Inject constructor(
         emit(DataSource.Error(Exception()))
     }
 
-    override fun getSatellitePosition(satelliteId: Int): Flow<DataSource<SatellitePosition>> = flow {
+    override fun getSatellitePosition(satelliteId: Int): Flow<DataSource<List<SatellitePosition>>> = flow {
         emit(DataSource.Loading)
-        val serviceData = satelliteService.getSatellitePosition(satelliteId)
-        val data = SatellitePosition(
-            posX = serviceData.posX,
-            posY = serviceData.posY
-        )
-        Log.d("Lovingg", data.toString())
-        emit(DataSource.Success(data))
+        val serviceData = satelliteService.getSatellitePosition(satelliteId).map {
+            SatellitePosition(
+                posX = it.posX,
+                posY = it.posY
+            )
+        }
+        emit(DataSource.Success(serviceData))
     }.catch {
         emit(DataSource.Error(Exception()))
     }

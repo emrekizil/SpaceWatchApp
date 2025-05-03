@@ -4,10 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emrekizil.core.common.DataSource
 import com.emrekizil.core.model.SatelliteDetail
+import com.emrekizil.core.model.SatellitePosition
 import com.emrekizil.data.repository.SpaceWatchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -19,6 +21,9 @@ class DetailViewModel @Inject constructor(
     private val _detailUiState = MutableStateFlow<DetailUiState>(DetailUiState.Loading)
     val detailUiState = _detailUiState.asStateFlow()
 
+    private val _position = MutableStateFlow(SatellitePosition(0.0,0.0))
+    val position = _position.asStateFlow()
+    
     fun getSatelliteDetail(satelliteId:Int){
         viewModelScope.launch {
             spaceWatchRepository.getSatelliteDetail(satelliteId).collect { dataState ->
@@ -38,6 +43,30 @@ class DetailViewModel @Inject constructor(
                             DetailUiState.Success(dataState.data)
                         }
                     }
+                }
+            }
+            spaceWatchRepository.getSatellitePosition(satelliteId).collect { dataState ->
+                when(dataState){
+                    is DataSource.Error      -> {}
+                    DataSource.Loading       -> {}
+                    is DataSource.Success<List<SatellitePosition>> -> {
+                        startFlow(dataState.data)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun startFlow(data: List<SatellitePosition>) {
+        viewModelScope.launch {
+            flow {
+                while (true){
+                    emit(data.random())
+                    kotlinx.coroutines.delay(3000)
+                }
+            }.collect { randomData->
+                _position.update {
+                    randomData
                 }
             }
         }
