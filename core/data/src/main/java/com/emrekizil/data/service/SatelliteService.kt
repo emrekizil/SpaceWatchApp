@@ -18,8 +18,13 @@ class SatelliteService @Inject constructor(
     private val serviceJson: Json,
     private val assets: SwAssetManager
 ) {
-    suspend fun getSatellites(): SatelliteListResponse =
-        getDataFromJsonFile(LIST_ASSET)
+    suspend fun getSatellites(searchQuery:String): SatelliteListResponse {
+        val data = getDataFromJsonFile<SatelliteListResponse>(LIST_ASSET).filter {
+            it.name.lowercase().contains(searchQuery)
+        }
+        return data
+    }
+
 
     suspend fun getSatelliteDetail(
         satelliteId: Int

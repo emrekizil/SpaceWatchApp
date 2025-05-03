@@ -6,15 +6,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import com.emrekizil.data.repository.SpaceWatchRepository
+import com.emrekizil.spacewatchapp.navigation.NavHost
 import com.emrekizil.spacewatchapp.ui.theme.SpaceWatchAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -29,10 +27,10 @@ class MainActivity : ComponentActivity() {
             val coroutienScope = rememberCoroutineScope()
             SpaceWatchAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    /*NavHost(
+                    NavHost(
                         modifier = Modifier.padding(innerPadding)
-                    )*/
-                    Button(
+                    )
+                    /*Button(
                         onClick = {
                             coroutienScope.launch {
                                 repository.getSatellites().collect{
@@ -49,7 +47,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     ) {
                         Text("fpldsfğpdslğpfdsğpf")
-                    }
+                    }*/
                 }
             }
         }

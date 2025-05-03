@@ -14,11 +14,11 @@ import javax.inject.Inject
 class SpaceWatchRepositoryImpl @Inject constructor(
     private val satelliteService: SatelliteService
 ) : SpaceWatchRepository {
-    override fun getSatellites(): Flow<DataSource<List<Satellite>>> = flow {
+    override fun getSatellites(searchQuery:String): Flow<DataSource<List<Satellite>>> = flow {
         emit(DataSource.Loading)
         Log.d("Lovingg", "loading")
         try {
-            val data: List<Satellite> = satelliteService.getSatellites().map {
+            val data: List<Satellite> = satelliteService.getSatellites(searchQuery).map {
                 Satellite(
                     active = it.active,
                     id = it.id,
