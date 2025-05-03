@@ -1,34 +1,71 @@
 package com.emrekizil.data.repository
 
-import android.content.Context
+import android.util.Log
 import com.emrekizil.core.common.DataSource
-import com.emrekizil.core.model.SatelliteListResponse
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
+import com.emrekizil.core.model.Satellite
+import com.emrekizil.core.model.SatelliteDetail
+import com.emrekizil.core.model.SatellitePosition
+import com.emrekizil.data.service.SatelliteService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class SpaceWatchRepositoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    private val satelliteService: SatelliteService
 ) : SpaceWatchRepository {
-    override fun getSatellites(): Flow<DataSource<SatelliteListResponse>> = flow {
+    override fun getSatellites(): Flow<DataSource<List<Satellite>>> = flow {
+        emit(DataSource.Loading)
+        Log.d("Lovingg", "loading")
+        try {
+            val data: List<Satellite> = satelliteService.getSatellites().map {
+                Satellite(
+                    active = it.active,
+                    id = it.id,
+                    name = it.name
+                )
+            }
+            Log.d("Lovingg", data.toString())
+            emit(DataSource.Success(data))
+        } catch (e: Exception) {
+            Log.d("Lovingg", e.toString())
+        }
+    }.catch {
+        Log.d("Lovingg", "error")
+        emit(DataSource.Error(Exception()))
+    }
+
+    override fun getSatelliteDetail(satelliteId: Int): Flow<DataSource<SatelliteDetail>> = flow {
         emit(DataSource.Loading)
         try {
-            val jsonString = context.readJsonFromAssets("satellite-list.json")
-            val gson = Gson()
-            val type = object : TypeToken<SatelliteListResponse>(){}.type
-            val satelliteList:SatelliteListResponse = gson.fromJson(jsonString,type)
-            emit(DataSource.Success(satelliteList))
-        } catch (e:Exception) {
-            emit(DataSource.Error(e))
+            val serviceData = satelliteService.getSatelliteDetail(satelliteId)
+            val data = SatelliteDetail(
+                costPerLaunch = serviceData.costPerLaunch,
+                firstFlight = serviceData.firstFlight,
+                height = serviceData.height,
+                id = serviceData.id,
+                mass = serviceData.mass
+            )
+            Log.d("Lovingg2", data.toString())
+            emit(DataSource.Success(data))
+        }catch (e:Exception){
+            Log.d("Lovingg2", e.toString())
         }
-    }.flowOn(Dispatchers.IO)
-}
 
-fun Context.readJsonFromAssets(fileName: String): String {
-    return assets.open(fileName).bufferedReader().use { it.readText() }
+    }.catch {
+        emit(DataSource.Error(Exception()))
+    }
+
+    override fun getSatellitePosition(satelliteId: Int): Flow<DataSource<SatellitePosition>> = flow {
+        emit(DataSource.Loading)
+        val serviceData = satelliteService.getSatellitePosition(satelliteId)
+        val data = SatellitePosition(
+            posX = serviceData.posX,
+            posY = serviceData.posY
+        )
+        Log.d("Lovingg", data.toString())
+        emit(DataSource.Success(data))
+    }.catch {
+        emit(DataSource.Error(Exception()))
+    }
 }

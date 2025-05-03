@@ -1,15 +1,12 @@
-package com.emrekizil.core.model
+package com.emrekizil.data.service.model
 
-
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
 typealias SatelliteListResponse = List<SatelliteListResponseItem>
 
+@Serializable
 data class SatelliteListResponseItem(
-    @SerializedName("active")
     val active: Boolean,
-    @SerializedName("id")
     val id: Int,
-    @SerializedName("name")
     val name: String
 )
