@@ -77,7 +77,7 @@ fun DetailScreenContent(
                         color = Color.Black
                     )
                     Text(
-                        text = "${detailUiState.satellites.costPerLaunch}",
+                        text = detailUiState.satellites.costPerLaunch,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black

@@ -8,7 +8,7 @@ import com.emrekizil.data.service.model.Position
 import com.emrekizil.data.service.model.SatelliteDetailResponseItem
 import com.emrekizil.data.service.model.SatelliteListResponse
 
-fun SatelliteListResponse.asExternalModel(): List<Satellite> =
+fun SatelliteListResponse.asExternalSatelliteModel(): List<Satellite> =
     this.map {
         Satellite(
             active = it.active,

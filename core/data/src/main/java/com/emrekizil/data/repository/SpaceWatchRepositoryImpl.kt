@@ -7,6 +7,7 @@ import com.emrekizil.core.model.SatelliteDetail
 import com.emrekizil.core.model.SatellitePosition
 import com.emrekizil.data.mapper.asEntity
 import com.emrekizil.data.mapper.asExternalModel
+import com.emrekizil.data.mapper.asExternalSatelliteModel
 import com.emrekizil.data.service.SatelliteService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -20,7 +21,7 @@ class SpaceWatchRepositoryImpl @Inject constructor(
 ) : SpaceWatchRepository {
     override fun getSatellites(searchQuery: String): Flow<DataSource<List<Satellite>>> = flow {
         emit(DataSource.Loading)
-        val data: List<Satellite> = satelliteService.getSatellites(searchQuery).asExternalModel()
+        val data: List<Satellite> = satelliteService.getSatellites(searchQuery).asExternalSatelliteModel()
         emit(DataSource.Success(data))
     }.catch { exception ->
         emit(DataSource.Error(exception as Exception))

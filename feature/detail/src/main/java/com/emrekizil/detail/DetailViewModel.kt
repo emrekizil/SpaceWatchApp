@@ -5,8 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.emrekizil.core.common.DataSource
 import com.emrekizil.core.model.SatelliteDetail
 import com.emrekizil.core.model.SatellitePosition
+import com.emrekizil.core.ui.formatDateString
+import com.emrekizil.core.ui.formatNumber
 import com.emrekizil.data.repository.SpaceWatchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
@@ -40,7 +43,7 @@ class DetailViewModel @Inject constructor(
                     }
                     is DataSource.Success<SatelliteDetail> -> {
                         _detailUiState.update {
-                            DetailUiState.Success(dataState.data)
+                            DetailUiState.Success(dataState.data.toSatelliteUiModel())
                         }
                     }
                 }
@@ -62,7 +65,7 @@ class DetailViewModel @Inject constructor(
             flow {
                 while (true){
                     emit(data.random())
-                    kotlinx.coroutines.delay(3000)
+                    delay(3000)
                 }
             }.collect { randomData->
                 _position.update {
@@ -77,5 +80,22 @@ class DetailViewModel @Inject constructor(
 sealed class DetailUiState {
     data object Loading : DetailUiState()
     data class Error(val exception: Exception) : DetailUiState()
-    data class Success(val satellites: SatelliteDetail) : DetailUiState()
+    data class Success(val satellites: SatelliteUiModel) : DetailUiState()
 }
+
+data class SatelliteUiModel (
+    val costPerLaunch: String,
+    val firstFlight: String,
+    val height: Int,
+    val id: Int,
+    val mass: Int
+)
+
+fun SatelliteDetail.toSatelliteUiModel():SatelliteUiModel =
+    SatelliteUiModel(
+        costPerLaunch = formatNumber(this.costPerLaunch),
+        firstFlight = formatDateString(this.firstFlight),
+        height = this.height,
+        id = this.id,
+        mass = this.mass
+    )
