@@ -2,19 +2,19 @@ package com.emrekizil.spacewatchapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.emrekizil.detail.navigation.detailScreen
 import com.emrekizil.detail.navigation.navigateToDetailScreen
 import com.emrekizil.list.navigation.ListRoute
 import com.emrekizil.list.navigation.listScreen
+import com.emrekizil.spacewatchapp.ui.AppState
 
 @Composable
 fun NavHost(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    appState: AppState
 ) {
-    val navController : NavHostController = rememberNavController()
+    val navController = appState.navController
     NavHost(
         navController = navController,
         startDestination = ListRoute,
