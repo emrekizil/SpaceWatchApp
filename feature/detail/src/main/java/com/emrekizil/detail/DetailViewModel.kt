@@ -1,5 +1,6 @@
 package com.emrekizil.detail
 
+import android.os.SystemClock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.emrekizil.core.common.DataSource
@@ -10,12 +11,18 @@ import com.emrekizil.core.ui.formatNumber
 import com.emrekizil.data.repository.SpaceWatchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.AbstractLongTimeSource
+import kotlin.time.DurationUnit
+import kotlin.time.TimeMark
+import kotlin.time.TimeSource
+import kotlin.time.toDuration
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
@@ -62,14 +69,11 @@ class DetailViewModel @Inject constructor(
 
     private fun startFlow(data: List<SatellitePosition>) {
         viewModelScope.launch {
-            flow {
-                while (true){
-                    emit(data.random())
-                    delay(3000)
-                }
-            }.collect { randomData->
+            synchronizedTickerFlow(
+                period = 3000L
+            ).collect {
                 _position.update {
-                    randomData
+                    data.random()
                 }
             }
         }
@@ -99,3 +103,25 @@ fun SatelliteDetail.toSatelliteUiModel():SatelliteUiModel =
         id = this.id,
         mass = this.mass
     )
+
+fun synchronizedTickerFlow(
+    period: Long,
+    timeSource: TimeSource = ElapsedRealTimeSource
+): Flow<Unit> {
+    return flow {
+        var nextEmissionTimeMark: TimeMark? = null
+        flow {
+            nextEmissionTimeMark?.let { delay(-it.elapsedNow()) }
+            while (true) {
+                emit(Unit)
+                nextEmissionTimeMark = timeSource.markNow() + period.toDuration(DurationUnit.NANOSECONDS)
+                delay(period)
+            }
+        }.collect(this)
+    }
+}
+
+object ElapsedRealTimeSource : AbstractLongTimeSource(DurationUnit.NANOSECONDS) {
+    override fun read(): Long = SystemClock.elapsedRealtimeNanos()
+    override fun toString(): String = "TimeSource(SystemClock.elapsedRealtimeNanos())"
+}
