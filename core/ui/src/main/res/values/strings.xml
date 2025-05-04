@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- List -->
+    <string name="feature_list_search_placeholder">Search</string>
+    <string name="feature_list_passive">Passive</string>
+    <string name="feature_list_active">Active</string>
+    <string name="feature_list_no_results_found">No results found.</string>
+    <string name="feature_list_clear_search">Clear Search</string>
+
+    <!-- Detail -->
+    <string name="feature_detail_height_mass">Height/Mass: </string>
+    <string name="feature_detail_cost">Cost: </string>
+    <string name="feature_detail_last_position">Last Position: </string>
+    <string name="feature_detail_last_position_value">(%1$s,%2$s)</string>
+</resources>
