@@ -30,7 +30,11 @@ fun DetailScreen(
     LaunchedEffect(true) {
         viewModel.getSatelliteDetail(satelliteId)
     }
-    DetailScreenContent(detailUiState = detailUiState, satelliteTitle = satelliteTitle, position = position)
+    DetailScreenContent(
+        detailUiState = detailUiState, 
+        satelliteTitle = satelliteTitle, 
+        positionContent = { PositionDisplay(position = position) }
+    )
 }
 
 @Composable
@@ -38,7 +42,7 @@ fun DetailScreenContent(
     modifier: Modifier = Modifier,
     detailUiState: DetailUiState,
     satelliteTitle: String,
-    position: SatellitePosition
+    positionContent: @Composable () -> Unit
 ) {
     Box(
         modifier = modifier.fillMaxSize()
@@ -82,14 +86,19 @@ fun DetailScreenContent(
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
                     )
-                    Text(
-                        text = "(${position.posX},${position.posY})",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
+                    positionContent()
                 }
             }
         }
     }
+}
+
+@Composable
+fun PositionDisplay(position: SatellitePosition) {
+    Text(
+        text = "(${position.posX},${position.posY})",
+        fontSize = 12.sp,
+        fontWeight = FontWeight.Bold,
+        color = Color.Black
+    )
 }

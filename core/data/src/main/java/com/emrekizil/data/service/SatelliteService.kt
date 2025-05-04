@@ -39,7 +39,7 @@ class SatelliteService @Inject constructor(
         satelliteId: Int
     ): List<Position> {
         val data = getDataFromJsonFile<SatellitePositionResponse>(POSITIONS_ASSET).list.first {
-            it.id == satelliteId.toString()
+            it.id == "$satelliteId"
         }
         return data.positions
     }
