@@ -13,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -25,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.emrekizil.core.model.SatellitePosition
 import com.emrekizil.core.ui.R
+import com.emrekizil.core.ui.theme.SpaceWatchTheme
 
 @Composable
 fun DetailScreen(
@@ -74,14 +74,14 @@ fun DetailScreenContent(
                         text = satelliteTitle,
                         fontSize = 32.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = Color.Black
+                        color = SpaceWatchTheme.colors.textColor
                     )
                     Spacer(Modifier.height(16.dp))
                     Text(
                         text = detailUiState.satellites.firstFlight,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium,
-                        color = Color.Black
+                        color = SpaceWatchTheme.colors.placeholderColor
                     )
                     Spacer(Modifier.height(48.dp))
                     Text(
@@ -92,7 +92,7 @@ fun DetailScreenContent(
                             append("${detailUiState.satellites.height}/${detailUiState.satellites.mass}")
                         },
                         fontSize = 12.sp,
-                        color = Color.Black
+                        color = SpaceWatchTheme.colors.textColor
                     )
                     Spacer(Modifier.height(24.dp))
                     Text(
@@ -103,7 +103,7 @@ fun DetailScreenContent(
                             append(detailUiState.satellites.costPerLaunch)
                         },
                         fontSize = 12.sp,
-                        color = Color.Black
+                        color = SpaceWatchTheme.colors.textColor
                     )
                     Spacer(Modifier.height(24.dp))
                     positionContent()
@@ -128,6 +128,6 @@ fun PositionDisplay(position: SatellitePosition) {
             )
         },
         fontSize = 12.sp,
-        color = Color.Black
+        color = SpaceWatchTheme.colors.textColor
     )
 }

@@ -18,6 +18,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import com.emrekizil.core.ui.R
 import com.emrekizil.core.ui.theme.SpaceWatchTheme
@@ -38,6 +39,7 @@ fun SearchBar(
             updateValue(value)
         },
         singleLine = true,
+        textStyle = TextStyle(color = SpaceWatchTheme.colors.textFieldTextColor),
         decorationBox = { innerTextField ->
             TextFieldDefaults.DecorationBox(
                 value = text,
@@ -46,14 +48,14 @@ fun SearchBar(
                 placeholder = {
                     Text(
                         text = stringResource(placeholderText),
-                        color = SpaceWatchTheme.colors.textColor
+                        color = SpaceWatchTheme.colors.placeholderColor
                     )
                 },
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Filled.Search,
                         contentDescription = stringResource(R.string.feature_list_search_placeholder),
-                        tint = Color.Black
+                        tint = SpaceWatchTheme.colors.textFieldIconTint
                     )
                 },
                 trailingIcon = {
@@ -64,18 +66,21 @@ fun SearchBar(
                             },
                             imageVector = Icons.Filled.Close,
                             contentDescription = stringResource(R.string.feature_list_clear_search),
-                            tint = Color.Black
+                            tint = SpaceWatchTheme.colors.textFieldIconTint
                         )
                     }
                 },
                 colors = TextFieldDefaults.colors(
-                    focusedTextColor = Color.Black,
-                    disabledTextColor = Color.Transparent,
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White,
+                    focusedContainerColor = SpaceWatchTheme.colors.textFieldBackgroundColor,
+                    unfocusedContainerColor =  SpaceWatchTheme.colors.textFieldBackgroundColor,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent
+                    disabledIndicatorColor = Color.Transparent,
+                    focusedLeadingIconColor = SpaceWatchTheme.colors.textFieldIconTint,
+                    unfocusedLeadingIconColor = SpaceWatchTheme.colors.unfocusedTextFieldIconTint,
+                    focusedTrailingIconColor = SpaceWatchTheme.colors.textFieldIconTint,
+                    unfocusedTrailingIconColor = SpaceWatchTheme.colors.unfocusedTextFieldIconTint,
+                    cursorColor = SpaceWatchTheme.colors.textFieldTextColor
                 ),
                 enabled = true,
                 singleLine = true,

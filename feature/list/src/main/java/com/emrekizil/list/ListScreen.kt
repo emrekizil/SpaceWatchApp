@@ -11,6 +11,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -68,7 +69,10 @@ fun ListScreenContent(
             }
 
             ListUiState.Loading -> {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    color = SpaceWatchTheme.colors.progressIndicatorColor
+                )
             }
 
             is ListUiState.Success -> {
@@ -89,8 +93,8 @@ fun ListScreenContent(
                             )
                             if (satellite != listUiState.satellites.last()) {
                                 HorizontalDivider(
-                                    modifier = Modifier.padding(vertical = 4.dp),
-                                    color = Color.Black
+                                    modifier = Modifier.padding(vertical = 8.dp),
+                                    color = SpaceWatchTheme.colors.dividerColor
                                 )
                             }
                         }

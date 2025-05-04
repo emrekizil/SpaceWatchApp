@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.emrekizil.core.model.Satellite
 import com.emrekizil.core.ui.R
+import com.emrekizil.core.ui.theme.SpaceWatchTheme
 
 @Composable
 fun SatelliteListItem(
@@ -30,7 +31,7 @@ fun SatelliteListItem(
 ) {
     val activityText = if (satellite.active) R.string.feature_list_active else R.string.feature_list_passive
     val activityColor = if (satellite.active) Color.Green else Color.Red
-    val activityTextColor = if (satellite.active) Color.Black else Color.LightGray
+    val activityTextColor = if (satellite.active) SpaceWatchTheme.colors.textColor else SpaceWatchTheme.colors.passiveTextColor
     Row(
         modifier = modifier.fillMaxWidth().clickable {
             navigateToDetailScreen(satellite.id, satellite.name)
