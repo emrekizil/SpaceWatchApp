@@ -12,9 +12,9 @@ import org.mockito.kotlin.whenever
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class SatelliteServiceTest {
+class SatelliteServiceImplTest {
 
-    private lateinit var service: SatelliteService
+    private lateinit var service: SatelliteServiceImpl
     private lateinit var assetManager: SwAssetManager
     private val testDispatcher = UnconfinedTestDispatcher()
     private val json = Json { ignoreUnknownKeys = true }
@@ -22,7 +22,7 @@ class SatelliteServiceTest {
     @Before
     fun setup() {
         assetManager = mock()
-        service = SatelliteService(testDispatcher, json, assetManager)
+        service = SatelliteServiceImpl(testDispatcher, json, assetManager)
     }
 
     @Test
