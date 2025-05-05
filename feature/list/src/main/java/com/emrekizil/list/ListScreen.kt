@@ -15,13 +15,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.emrekizil.core.model.Satellite
 import com.emrekizil.core.ui.R
 import com.emrekizil.core.ui.component.ErrorView
 import com.emrekizil.core.ui.component.LoadingView
 import com.emrekizil.core.ui.component.SearchBar
+import com.emrekizil.core.ui.theme.SpaceWatchAppTheme
 import com.emrekizil.core.ui.theme.SpaceWatchTheme
 
 @Composable
@@ -103,5 +106,30 @@ fun ListScreenContent(
             }
         }
     }
+}
 
+@PreviewLightDark
+@Composable
+fun ListScreenContentPreview() {
+    SpaceWatchAppTheme {
+        ListScreenContent(
+            listUiState = ListUiState.Success(
+                satellites = listOf(
+                    Satellite(
+                        id = 1,
+                        name = "Starlink-1",
+                        active = true
+                    ),
+                    Satellite(
+                        id = 2,
+                        name = "Starlink-2",
+                        active = false
+                    )
+                )
+            ),
+            query = "",
+            updateQuery = {},
+            navigateToDetailScreen = { _, _ -> }
+        )
+    }
 }

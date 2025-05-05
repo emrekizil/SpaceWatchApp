@@ -17,6 +17,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -25,6 +26,7 @@ import com.emrekizil.core.model.SatellitePosition
 import com.emrekizil.core.ui.R
 import com.emrekizil.core.ui.component.ErrorView
 import com.emrekizil.core.ui.component.LoadingView
+import com.emrekizil.core.ui.theme.SpaceWatchAppTheme
 import com.emrekizil.core.ui.theme.SpaceWatchTheme
 
 @Composable
@@ -133,4 +135,44 @@ fun PositionDisplay(position: SatellitePosition) {
         fontSize = 14.sp,
         color = SpaceWatchTheme.colors.textColor
     )
+}
+
+@PreviewLightDark
+@Composable
+fun DetailScreenContentPreview() {
+    SpaceWatchAppTheme {
+        DetailScreenContent(
+            detailUiState = DetailUiState.Success(
+                satellites = SatelliteUiModel(
+                    costPerLaunch = "$100M",
+                    firstFlight = "2020-01-01",
+                    height = 100,
+                    id = 1,
+                    mass = 500
+                )
+            ),
+            satelliteTitle = "Starlink-1",
+            positionContent = {
+                PositionDisplay(
+                    position = SatellitePosition(
+                        posX = 0.5,
+                        posY = 0.5
+                    )
+                )
+            }
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun PositionDisplayPreview() {
+    SpaceWatchAppTheme {
+        PositionDisplay(
+            position = SatellitePosition(
+                posX = 0.5,
+                posY = 0.5
+            )
+        )
+    }
 }
