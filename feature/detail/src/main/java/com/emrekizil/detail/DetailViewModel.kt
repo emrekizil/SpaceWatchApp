@@ -33,7 +33,7 @@ class DetailViewModel @Inject constructor(
 
     private val _position = MutableStateFlow(SatellitePosition(0.0,0.0))
     val position = _position.asStateFlow()
-    
+
     fun getSatelliteDetail(satelliteId:Int){
         viewModelScope.launch {
             spaceWatchRepository.getSatelliteDetail(satelliteId).collect { dataState ->
@@ -55,6 +55,12 @@ class DetailViewModel @Inject constructor(
                     }
                 }
             }
+
+        }
+    }
+
+    fun getSatellitePosition(satelliteId: Int){
+        viewModelScope.launch {
             spaceWatchRepository.getSatellitePosition(satelliteId).collect { dataState ->
                 when(dataState){
                     is DataSource.Error      -> {}
@@ -65,6 +71,7 @@ class DetailViewModel @Inject constructor(
                 }
             }
         }
+
     }
 
     private fun startFlow(data: List<SatellitePosition>) {
