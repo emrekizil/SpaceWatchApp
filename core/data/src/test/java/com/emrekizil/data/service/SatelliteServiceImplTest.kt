@@ -1,5 +1,8 @@
 package com.emrekizil.data.service
 
+import com.emrekizil.data.positionsJson
+import com.emrekizil.data.satelliteDetailJson
+import com.emrekizil.data.satelliteListJson
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -26,63 +29,35 @@ class SatelliteServiceImplTest {
     }
 
     @Test
-    fun `getSatellites returns filtered satellites based on search query`() = runTest {
-        val satelliteListJson = """
-            [
-                {"id": 1, "name": "Starship-1", "active": false},
-                {"id": 2, "name": "Dragon-1", "active": true},
-                {"id": 3, "name": "Starship-3", "active": true}
-            ]
-        """.trimIndent()
+    fun getSatellites_returns_filteredSatellites_based_on_searchQuery() = runTest {
+
         whenever(assetManager.open("satellite-list.json")).thenReturn(
             satelliteListJson.byteInputStream()
         )
-        val result = service.getSatellites("alpha")
+
+        val result = service.getSatellites("starship")
+
         assertEquals(2, result.size)
-        assertEquals("Alpha Satellite", result[0].name)
-        assertEquals("Gamma Alpha", result[1].name)
+        assertEquals("Starship-1", result[0].name)
+        assertEquals("Starship-3", result[1].name)
     }
 
     @Test
-    fun `getSatelliteDetail returns detail for specified satellite ID`() = runTest {
-        val satelliteDetailJson = """
-            [
-                {"id": 1, "name": "Alpha Satellite", "cost_per_launch": 1000000, "first_flight": "2020-01-01", "height": 100, "mass": 5000},
-                {"id": 2, "name": "Beta Satellite", "cost_per_launch": 2000000, "first_flight": "2021-02-02", "height": 150, "mass": 7000}
-            ]
-        """.trimIndent()
-        
+    fun getSatelliteDetail_returns_detail_for_specifiedSatelliteId() = runTest {
+
         whenever(assetManager.open("satellite-detail.json")).thenReturn(
             satelliteDetailJson.byteInputStream()
         )
+
         val result = service.getSatelliteDetail(2)
+
         assertEquals(2, result.id)
         assertEquals(2000000, result.costPerLaunch)
     }
 
     @Test
-    fun `getSatellitePosition returns positions for specified satellite ID`() = runTest {
-        val positionsJson = """
-            {
-                "list": [
-                    {
-                        "id": "1",
-                        "positions": [
-                            {"posX": 0.864, "posY": 0.123},
-                            {"posX": 0.765, "posY": 0.234}
-                        ]
-                    },
-                    {
-                        "id": "2",
-                        "positions": [
-                            {"posX": 0.543, "posY": 0.432},
-                            {"posX": 0.654, "posY": 0.321}
-                        ]
-                    }
-                ]
-            }
-        """.trimIndent()
-        
+    fun getSatellitePosition_returns_positions_for_specifiedSatelliteId() = runTest {
+
         whenever(assetManager.open("positions.json")).thenReturn(
             positionsJson.byteInputStream()
         )
@@ -97,40 +72,22 @@ class SatelliteServiceImplTest {
     }
 
     @Test(expected = NoSuchElementException::class)
-    fun `getSatelliteDetail throws exception when satellite ID not found`() = runTest {
+    fun getSatelliteDetail_throws_exception_when_satelliteId_notFound() = runTest {
 
-        val satelliteDetailJson = """
-            [
-                {"id": 1, "name": "Alpha Satellite", "cost_per_launch": 1000000, "first_flight": "2020-01-01", "height": 100, "mass": 5000}
-            ]
-        """.trimIndent()
-        
         whenever(assetManager.open("satellite-detail.json")).thenReturn(
             satelliteDetailJson.byteInputStream()
         )
-        service.getSatelliteDetail(999)
+
+        service.getSatelliteDetail(99)
     }
 
     @Test(expected = NoSuchElementException::class)
-    fun `getSatellitePosition throws exception when satellite ID not found`() = runTest {
+    fun getSatellitePosition_throws_exception_when_satelliteId_notFound() = runTest {
 
-        val positionsJson = """
-            {
-                "list": [
-                    {
-                        "id": "1",
-                        "positions": [
-                            {"posX": 0.864, "posY": 0.123}
-                        ]
-                    }
-                ]
-            }
-        """.trimIndent()
-        
         whenever(assetManager.open("positions.json")).thenReturn(
             positionsJson.byteInputStream()
         )
 
-        service.getSatellitePosition(999)
+        service.getSatellitePosition(99)
     }
 } 

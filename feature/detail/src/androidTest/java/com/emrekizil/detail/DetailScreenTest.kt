@@ -14,7 +14,7 @@ class DetailScreenTest {
     val composeRule = createComposeRule()
 
     @Test
-    fun testListScreenUi_whenUiStateLoading_showLoadingState() {
+    fun uiState_whenUiStateLoading_showLoadingState() {
         composeRule.setContent {
             TestDetailScreen(DetailUiState.Loading)
         }
@@ -22,7 +22,7 @@ class DetailScreenTest {
     }
 
     @Test
-    fun testListScreenUi_whenUiStateError_showErrorView() {
+    fun uiState_whenUiStateError_showErrorView() {
         composeRule.setContent {
             TestDetailScreen(
                 detailUiState = DetailUiState.Error(Exception())
@@ -32,7 +32,7 @@ class DetailScreenTest {
     }
 
     @Test
-    fun testListScreenUi_whenUiStateSuccess_showUiLoadedAndSatellites() {
+    fun uiState_whenUiStateSuccess_showUiLoadedAndSatellites() {
         composeRule.setContent {
             TestDetailScreen(
                 detailUiState = DetailUiState.Success(satelliteUiModel())

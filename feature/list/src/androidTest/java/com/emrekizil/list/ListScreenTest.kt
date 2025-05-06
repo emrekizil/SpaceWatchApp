@@ -15,7 +15,7 @@ class ListScreenTest {
     val composeRule = createComposeRule()
 
     @Test
-    fun testListScreenUi_whenUiStateLoading_showLoadingState() {
+    fun uiState_whenUiStateLoading_showLoadingState() {
         composeRule.setContent {
             TestListScreen(ListUiState.Loading)
         }
@@ -23,7 +23,7 @@ class ListScreenTest {
     }
 
     @Test
-    fun testListScreenUi_whenUiStateError_showErrorView() {
+    fun uiState_whenUiStateError_showErrorView() {
         composeRule.setContent {
             TestListScreen(
                 uiState = ListUiState.Error(Exception())
@@ -33,7 +33,7 @@ class ListScreenTest {
     }
 
     @Test
-    fun testListScreenUi_whenUiStateSuccess_showUiLoadedAndSatellites() {
+    fun satellites_whenUiStateSuccess_showUiLoadedAndSatellites() {
         composeRule.setContent {
             TestListScreen(
                 uiState = ListUiState.Success(satelliteList())
@@ -45,7 +45,7 @@ class ListScreenTest {
     }
 
     @Test
-    fun testListScreenUi_whenUiStateSuccessAndEmptyList_showUiNoResultsFound() {
+    fun emptySatellites_whenUiStateSuccessAndEmptyList_showUiNoResultsFound() {
         composeRule.setContent {
             TestListScreen(
                 uiState = ListUiState.Success(emptyList())
