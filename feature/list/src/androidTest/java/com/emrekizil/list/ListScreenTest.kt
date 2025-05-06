@@ -26,7 +26,7 @@ class ListScreenTest {
     fun uiState_whenUiStateError_showErrorView() {
         composeRule.setContent {
             TestListScreen(
-                uiState = ListUiState.Error(Exception())
+                uiState = ListUiState.Error("Exception")
             )
         }
         composeRule.onNodeWithTag("ErrorView").assertIsDisplayed()

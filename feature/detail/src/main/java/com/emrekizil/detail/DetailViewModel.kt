@@ -40,7 +40,7 @@ class DetailViewModel @Inject constructor(
                 when(dataState){
                     is DataSource.Error      -> {
                         _detailUiState.update {
-                            DetailUiState.Error(Exception())
+                            DetailUiState.Error(dataState.exception.message)
                         }
                     }
                     DataSource.Loading       -> {
@@ -90,7 +90,7 @@ class DetailViewModel @Inject constructor(
 
 sealed class DetailUiState {
     data object Loading : DetailUiState()
-    data class Error(val exception: Exception) : DetailUiState()
+    data class Error(val message: String?) : DetailUiState()
     data class Success(val satellites: SatelliteUiModel) : DetailUiState()
 }
 

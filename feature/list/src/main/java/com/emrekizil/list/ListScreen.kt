@@ -68,7 +68,7 @@ fun ListScreenContent(
         when (listUiState) {
             is ListUiState.Error -> {
                 ErrorView(
-                    errorText = listUiState.exception.message
+                    errorText = listUiState.message
                 )
             }
 

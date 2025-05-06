@@ -19,29 +19,27 @@ class SatelliteServiceImpl @Inject constructor(
     private val assets: SwAssetManager
 ) : SatelliteService {
     override suspend fun getSatellites(searchQuery:String): SatelliteListResponse {
-        val data = getDataFromJsonFile<SatelliteListResponse>(LIST_ASSET).filter {
-            it.name.lowercase().contains(searchQuery)
+        return getDataFromJsonFile<SatelliteListResponse>(LIST_ASSET).filter {
+            it.name.lowercase().contains(searchQuery.lowercase())
         }
-        return data
     }
 
 
     override suspend fun getSatelliteDetail(
         satelliteId: Int
     ): SatelliteDetailResponseItem {
-        val data = getDataFromJsonFile<SatelliteDetailResponse>(DETAIL_ASSET).first {
+        return getDataFromJsonFile<SatelliteDetailResponse>(DETAIL_ASSET).first {
             it.id == satelliteId
         }
-        return data
     }
 
     override suspend fun getSatellitePosition(
         satelliteId: Int
     ): List<Position> {
-        val data = getDataFromJsonFile<SatellitePositionResponse>(POSITIONS_ASSET).list.first {
-            it.id == "$satelliteId"
+        val satelliteItem = getDataFromJsonFile<SatellitePositionResponse>(POSITIONS_ASSET).list.first {
+            it.id == satelliteId.toString()
         }
-        return data.positions
+        return satelliteItem.positions
     }
 
 

@@ -49,7 +49,7 @@ class ListViewModel @Inject constructor(
                 when (satellites) {
                     is DataSource.Error -> {
                         _listUiState.update {
-                            ListUiState.Error(satellites.exception)
+                            ListUiState.Error(satellites.exception.message)
                         }
                     }
 
@@ -95,6 +95,6 @@ class ListViewModel @Inject constructor(
 
 sealed class ListUiState {
     data object Loading : ListUiState()
-    data class Error(val exception: Exception) : ListUiState()
+    data class Error(val message: String?) : ListUiState()
     data class Success(val satellites: List<Satellite>) : ListUiState()
 }

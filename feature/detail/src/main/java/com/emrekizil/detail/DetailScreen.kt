@@ -62,7 +62,7 @@ fun DetailScreenContent(
         when (detailUiState) {
             is DetailUiState.Error -> {
                 ErrorView(
-                    errorText = detailUiState.exception.message
+                    errorText = detailUiState.message
                 )
             }
 

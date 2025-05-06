@@ -25,7 +25,7 @@ class DetailScreenTest {
     fun uiState_whenUiStateError_showErrorView() {
         composeRule.setContent {
             TestDetailScreen(
-                detailUiState = DetailUiState.Error(Exception())
+                detailUiState = DetailUiState.Error("Exception")
             )
         }
         composeRule.onNodeWithTag("ErrorView").assertIsDisplayed()

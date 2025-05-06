@@ -8,6 +8,7 @@ import com.emrekizil.data.mapper.asExternalModel
 import com.emrekizil.data.satelliteDetail
 import com.emrekizil.data.satelliteDetailEntity
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.test.runTest
@@ -26,7 +27,8 @@ class SpaceWatchRepositoryImplTest {
         fakeSpaceWatchDao = FakeSpaceWatchDao()
         repository = SpaceWatchRepositoryImpl(
             satelliteService = fakeSatelliteService,
-            spaceWatchDao = fakeSpaceWatchDao
+            spaceWatchDao = fakeSpaceWatchDao,
+            ioDispatcher = Dispatchers.IO
         )
     }
 
