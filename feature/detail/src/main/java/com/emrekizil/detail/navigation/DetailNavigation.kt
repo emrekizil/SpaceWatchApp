@@ -15,20 +15,26 @@ data class DetailRoute(
 
 fun NavController.navigateToDetailScreen(
     satelliteId: Int,
-    satelliteTitle:String
+    satelliteTitle: String
 ) = navigate(
-        route = DetailRoute(
-            satelliteId,
-            satelliteTitle
-        )
+    route = DetailRoute(
+        satelliteId,
+        satelliteTitle
     )
+)
 
-fun NavGraphBuilder.detailScreen() {
+fun NavController.navigateBack() =
+    popBackStack()
+
+fun NavGraphBuilder.detailScreen(
+    navigateBack: () -> Unit
+) {
     composable<DetailRoute> {
         val argument = it.toRoute<DetailRoute>()
         DetailScreen(
             satelliteId = argument.satelliteId,
-            satelliteTitle = argument.satelliteTitle
+            satelliteTitle = argument.satelliteTitle,
+            navigateBack = navigateBack
         )
     }
 }

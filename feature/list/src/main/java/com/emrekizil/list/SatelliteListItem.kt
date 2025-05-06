@@ -1,7 +1,6 @@
 package com.emrekizil.list
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import com.emrekizil.core.model.Satellite
 import com.emrekizil.core.ui.R
 import com.emrekizil.core.ui.theme.SpaceWatchTheme
+import com.emrekizil.core.ui.util.clickableWithoutRipple
 
 @Composable
 fun SatelliteListItem(
@@ -34,7 +34,7 @@ fun SatelliteListItem(
     val activityTextColor = if (satellite.active) SpaceWatchTheme.colors.textColor else SpaceWatchTheme.colors.passiveTextColor
 
     Row(
-        modifier = modifier.fillMaxWidth().clickable {
+        modifier = modifier.fillMaxWidth().clickableWithoutRipple {
             navigateToDetailScreen(satellite.id, satellite.name)
         },
         verticalAlignment = Alignment.CenterVertically,

@@ -1,7 +1,6 @@
 package com.emrekizil.detail
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +25,7 @@ import com.emrekizil.core.model.SatellitePosition
 import com.emrekizil.core.ui.R
 import com.emrekizil.core.ui.component.ErrorView
 import com.emrekizil.core.ui.component.LoadingView
+import com.emrekizil.core.ui.component.NavigationBar
 import com.emrekizil.core.ui.theme.SpaceWatchAppTheme
 import com.emrekizil.core.ui.theme.SpaceWatchTheme
 
@@ -34,6 +34,7 @@ fun DetailScreen(
     modifier: Modifier = Modifier,
     satelliteId: Int,
     satelliteTitle: String,
+    navigateBack: () -> Unit,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     val detailUiState by viewModel.detailUiState.collectAsStateWithLifecycle()
@@ -45,7 +46,8 @@ fun DetailScreen(
     DetailScreenContent(
         detailUiState = detailUiState,
         satelliteTitle = satelliteTitle,
-        positionContent = { PositionDisplay(position = position) }
+        positionContent = { PositionDisplay(position = position) },
+        navigateBack = navigateBack
     )
 }
 
@@ -54,11 +56,13 @@ fun DetailScreenContent(
     modifier: Modifier = Modifier,
     detailUiState: DetailUiState,
     satelliteTitle: String,
-    positionContent: @Composable () -> Unit
+    positionContent: @Composable () -> Unit,
+    navigateBack: () -> Unit
 ) {
-    Box(
+    Column(
         modifier = modifier.fillMaxSize()
     ) {
+        NavigationBar(onNavigateBack = navigateBack)
         when (detailUiState) {
             is DetailUiState.Error -> {
                 ErrorView(
@@ -160,7 +164,8 @@ fun DetailScreenContentPreview() {
                         posY = 0.5
                     )
                 )
-            }
+            },
+            navigateBack = {}
         )
     }
 }

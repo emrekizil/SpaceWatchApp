@@ -18,7 +18,8 @@ data class SpaceWatchColors(
     val unfocusedTextFieldIconTint: Color = Color.Unspecified,
     val passiveTextColor: Color = Color.Unspecified,
     val dividerColor: Color = Color.Unspecified,
-    val progressIndicatorColor: Color = Color.Unspecified
+    val progressIndicatorColor: Color = Color.Unspecified,
+    val iconTintColor: Color = Color.Unspecified
 )
 
 val LocalCustomColors = staticCompositionLocalOf {
@@ -41,7 +42,8 @@ fun SpaceWatchAppTheme(
             progressIndicatorColor = Color.White,
             textFieldBackgroundColor = Dark,
             unfocusedTextFieldIconTint = LightWhite,
-            textFieldTextColor = Color.White
+            textFieldTextColor = Color.White,
+            iconTintColor = Color.White
         )
     } else {
         SpaceWatchColors(
@@ -54,7 +56,8 @@ fun SpaceWatchAppTheme(
             progressIndicatorColor = Color.Black,
             textFieldBackgroundColor = Color.White,
             unfocusedTextFieldIconTint = LightBlack,
-            textFieldTextColor = Color.Black
+            textFieldTextColor = Color.Black,
+            iconTintColor = Color.Black
         )
     }
 

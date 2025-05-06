@@ -51,7 +51,8 @@ class DetailScreenTest {
             DetailScreenContent(
                 detailUiState = detailUiState,
                 satelliteTitle = satelliteTitle,
-                positionContent = { TestPositionContent() }
+                positionContent = { TestPositionContent() },
+                navigateBack = {}
             )
         }
     }

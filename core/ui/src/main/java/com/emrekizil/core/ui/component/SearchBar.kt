@@ -1,7 +1,6 @@
 package com.emrekizil.core.ui.component
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
@@ -22,6 +21,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import com.emrekizil.core.ui.R
 import com.emrekizil.core.ui.theme.SpaceWatchTheme
+import com.emrekizil.core.ui.util.clickableWithoutRipple
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -61,7 +61,7 @@ fun SearchBar(
                 trailingIcon = {
                     if (text.isNotEmpty()) {
                         Icon(
-                            modifier = Modifier.clickable {
+                            modifier = Modifier.clickableWithoutRipple {
                                 updateValue("")
                             },
                             imageVector = Icons.Filled.Close,

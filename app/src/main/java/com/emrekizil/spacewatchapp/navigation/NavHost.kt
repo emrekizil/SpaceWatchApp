@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.emrekizil.detail.navigation.detailScreen
+import com.emrekizil.detail.navigation.navigateBack
 import com.emrekizil.detail.navigation.navigateToDetailScreen
 import com.emrekizil.list.navigation.ListRoute
 import com.emrekizil.list.navigation.listScreen
@@ -23,6 +24,8 @@ fun NavHost(
         listScreen(
             navController::navigateToDetailScreen
         )
-        detailScreen()
+        detailScreen(
+            navController::navigateBack
+        )
     }
 }
