@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.spacewatchapp.android.application.compose)
     alias(libs.plugins.spacewatchapp.android.hilt)
     alias(libs.plugins.compose.compiler)
-    id("androidx.room") version "2.6.1" apply false
+    alias(libs.plugins.room) apply false
 }
 
 android {
@@ -35,10 +35,6 @@ android {
 
 
 dependencies {
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(project(":feature:list"))
     implementation(project(":feature:detail"))
     implementation(project(":core:data"))
@@ -47,7 +43,12 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:ui"))
     implementation(project(":core:testing"))
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
