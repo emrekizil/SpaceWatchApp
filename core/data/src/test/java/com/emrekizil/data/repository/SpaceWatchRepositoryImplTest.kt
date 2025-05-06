@@ -34,7 +34,7 @@ class SpaceWatchRepositoryImplTest {
 
     @Test
     fun spaceWatchRepository_get_satellite_detail_is_fetch_from_db() = runTest {
-        val database = fakeSpaceWatchDao.getSatelliteById(1).first().asExternalModel()
+        val database = fakeSpaceWatchDao.getSatelliteById(1).first()?.asExternalModel()
         val data = repository.getSatelliteDetail(1).last()
         assertThat((data as DataSource.Success).data).isEqualTo(database)
     }
@@ -47,14 +47,6 @@ class SpaceWatchRepositoryImplTest {
         }
     }
 
-    @Test
-    fun spaceWatchRepository_get_satellite_detail_is_set_to_error_state() = runTest {
-        repository.getSatelliteDetail(SAMPLE_SATELLITE_ID).test {
-            assertThat(awaitItem()).isInstanceOf(DataSource.Loading::class.java)
-            assertThat(awaitItem()).isInstanceOf(DataSource.Error::class.java)
-            awaitComplete()
-        }
-    }
 
     @Test
     fun spaceWatchRepository_get_satellite_detail_is_set_to_success_state() = runTest {

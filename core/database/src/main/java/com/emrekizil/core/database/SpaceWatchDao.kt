@@ -12,7 +12,7 @@ interface SpaceWatchDao {
     fun getSatellites(): Flow<List<SatelliteDetailEntity>>
 
     @Query("SELECT * FROM satellitedetailentity WHERE id = :satelliteId")
-    fun getSatelliteById(satelliteId: Int): Flow<SatelliteDetailEntity>
+    fun getSatelliteById(satelliteId: Int): Flow<SatelliteDetailEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveSatelliteDetail(satelliteDetailEntity: SatelliteDetailEntity)

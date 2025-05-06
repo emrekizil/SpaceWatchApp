@@ -24,7 +24,7 @@ internal class SpaceWatchDaoTest : DatabaseTest() {
 
         assertEquals(
             expected = "2023",
-            savedSatellite.firstFlight
+            savedSatellite?.firstFlight
         )
     }
 
@@ -37,7 +37,7 @@ internal class SpaceWatchDaoTest : DatabaseTest() {
         val newSavedTopic = spaceWatchDao.getSatelliteById(1).first()
         assertEquals(
             expected = "2021",
-            newSavedTopic.firstFlight
+            newSavedTopic?.firstFlight
         )
     }
 

@@ -16,7 +16,6 @@ dependencies {
     implementation(libs.androidx.ui.test.junit4.android)
 
     testImplementation(libs.junit)
-
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

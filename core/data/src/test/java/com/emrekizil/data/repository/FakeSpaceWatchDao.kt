@@ -10,16 +10,16 @@ import kotlinx.coroutines.flow.update
 
 class FakeSpaceWatchDao : SpaceWatchDao {
 
-    private val satellites = MutableStateFlow<List<SatelliteDetailEntity>>(listOf(
+    private val satellites = MutableStateFlow(listOf(
         satelliteDetailEntity().copy(id = 1)
     ))
 
     override fun getSatellites(): Flow<List<SatelliteDetailEntity>> =
         satellites
 
-    override fun getSatelliteById(satelliteId: Int): Flow<SatelliteDetailEntity> =
+    override fun getSatelliteById(satelliteId: Int): Flow<SatelliteDetailEntity?> =
         satellites.map { data->
-            data.first {
+            data.firstOrNull {
                 it.id == satelliteId
             }
         }
