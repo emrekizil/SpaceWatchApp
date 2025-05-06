@@ -1,4 +1,4 @@
-package com.emrekizil.list
+package com.emrekizil.list.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -26,6 +26,7 @@ import com.emrekizil.core.ui.component.LoadingView
 import com.emrekizil.core.ui.component.SearchBar
 import com.emrekizil.core.ui.theme.SpaceWatchAppTheme
 import com.emrekizil.core.ui.theme.SpaceWatchTheme
+import com.emrekizil.list.component.SatelliteListItem
 
 @Composable
 fun ListScreen(
@@ -60,7 +61,7 @@ fun ListScreenContent(
             )
     ) {
         SearchBar(
-            modifier = Modifier.padding(bottom = 24.dp),
+            modifier = Modifier.padding(vertical = 24.dp),
             text = query,
             updateValue = updateQuery,
             placeholderText = R.string.feature_list_search_placeholder
