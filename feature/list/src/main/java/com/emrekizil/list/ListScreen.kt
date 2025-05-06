@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -86,15 +86,15 @@ fun ListScreenContent(
                     )
                 } else {
                     LazyColumn {
-                        items(
+                        itemsIndexed(
                             items = listUiState.satellites,
-                            key = { it.id }
-                        ) { satellite ->
+                            key = { _, item -> item.id }
+                        ) { index, satellite ->
                             SatelliteListItem(
                                 satellite = satellite,
                                 navigateToDetailScreen = navigateToDetailScreen
                             )
-                            if (satellite != listUiState.satellites.last()) {
+                            if (index != listUiState.satellites.lastIndex) {
                                 HorizontalDivider(
                                     modifier = Modifier.padding(vertical = 8.dp),
                                     color = SpaceWatchTheme.colors.dividerColor

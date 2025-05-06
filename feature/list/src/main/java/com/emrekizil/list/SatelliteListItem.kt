@@ -32,6 +32,7 @@ fun SatelliteListItem(
     val activityText = if (satellite.active) R.string.feature_list_active else R.string.feature_list_passive
     val activityColor = if (satellite.active) Color.Green else Color.Red
     val activityTextColor = if (satellite.active) SpaceWatchTheme.colors.textColor else SpaceWatchTheme.colors.passiveTextColor
+
     Row(
         modifier = modifier.fillMaxWidth().clickable {
             navigateToDetailScreen(satellite.id, satellite.name)

@@ -92,9 +92,3 @@ class ListViewModel @Inject constructor(
         const val MINIMUM_LENGTH = 1
     }
 }
-
-sealed class ListUiState {
-    data object Loading : ListUiState()
-    data class Error(val message: String?) : ListUiState()
-    data class Success(val satellites: List<Satellite>) : ListUiState()
-}
