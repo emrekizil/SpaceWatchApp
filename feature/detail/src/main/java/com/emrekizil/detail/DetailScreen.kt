@@ -38,7 +38,7 @@ fun DetailScreen(
 ) {
     val detailUiState by viewModel.detailUiState.collectAsStateWithLifecycle()
     val position by viewModel.position.collectAsStateWithLifecycle()
-    LaunchedEffect(true) {
+    LaunchedEffect(satelliteId) {
         viewModel.getSatelliteDetail(satelliteId)
         viewModel.getSatellitePosition(satelliteId)
     }

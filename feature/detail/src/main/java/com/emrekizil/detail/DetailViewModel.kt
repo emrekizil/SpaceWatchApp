@@ -6,8 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.emrekizil.core.common.DataSource
 import com.emrekizil.core.model.SatelliteDetail
 import com.emrekizil.core.model.SatellitePosition
-import com.emrekizil.core.ui.formatDateString
-import com.emrekizil.core.ui.formatNumber
 import com.emrekizil.data.repository.SpaceWatchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -15,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -63,53 +62,24 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             spaceWatchRepository.getSatellitePosition(satelliteId).collect { dataState ->
                 when(dataState){
-                    is DataSource.Error      -> {}
-                    DataSource.Loading       -> {}
                     is DataSource.Success<List<SatellitePosition>> -> {
-                        startFlow(dataState.data)
+                        randomPositionFlow(dataState.data).collect { randomPosition ->
+                            _position.update {
+                                randomPosition
+                            }
+                        }
                     }
+                    else -> {}
                 }
             }
         }
 
     }
 
-    private fun startFlow(data: List<SatellitePosition>) {
-        viewModelScope.launch {
-            synchronizedTickerFlow(
-                period = 3000L
-            ).collect {
-                _position.update {
-                    data.random()
-                }
-            }
-        }
+    private fun randomPositionFlow(data: List<SatellitePosition>) : Flow<SatellitePosition>{
+        return synchronizedTickerFlow(period = 3000L).map { data.random() }
     }
 }
-
-
-sealed class DetailUiState {
-    data object Loading : DetailUiState()
-    data class Error(val message: String?) : DetailUiState()
-    data class Success(val satellites: SatelliteUiModel) : DetailUiState()
-}
-
-data class SatelliteUiModel (
-    val costPerLaunch: String,
-    val firstFlight: String,
-    val height: Int,
-    val id: Int,
-    val mass: Int
-)
-
-fun SatelliteDetail.toSatelliteUiModel():SatelliteUiModel =
-    SatelliteUiModel(
-        costPerLaunch = formatNumber(this.costPerLaunch),
-        firstFlight = formatDateString(this.firstFlight),
-        height = this.height,
-        id = this.id,
-        mass = this.mass
-    )
 
 fun synchronizedTickerFlow(
     period: Long,
